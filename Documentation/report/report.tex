@@ -1,0 +1,162 @@
+\documentclass[12pt, dvipsnames, a4paper]{article}
+\usepackage{geometry}
+\geometry{legalpaper, margin=0.5in}
+\usepackage{xcolor}
+\usepackage{xspace} 
+\usepackage[normalem]{ulem}
+\usepackage{vwcol}
+\usepackage{cancel}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{lstautogobble}
+\usepackage[parfill]{parskip}
+\usepackage{tikz-qtree}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{every tree node/.style={minimum width=4cm,draw,circle},
+         blank/.style={draw=none},
+         edge from parent/.style=
+         {draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}},
+         level distance=1.5cm}
+
+%% Genearl %%
+\renewcommand{\thesection}{\arabic{section}}
+
+%% For convenience %%
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\bcode}[1]{\texttt{\textbf{#1}}}
+\newcommand{\balert}[1]{\textbf{\alert{#1}}}
+\newcommand{\rarrow}{$\Rightarrow$}
+\newcommand{\tab}[1][0.5cm]{\hspace*{#1}}
+\newcommand{\deepemphasis}[1]{\underline{\textbf{\Large{#1}}}}
+\newcommand{\bfemph}[1]{\textbf{\emph{#1}}}
+\newcommand{\OR}[0]{\lvert \: \rvert}
+
+%% Colours %%
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mLightGreen}{HTML}{14B03D}
+
+%% Pseudocode %% 
+\lstdefinelanguage{pseudo}
+{
+	keywords=[1]{
+		class,
+		new,
+		loop,
+		until,
+		end,
+		if,
+		else,
+		then,
+		return,
+		while,
+		for,
+		to,
+		fun,
+		break,
+		and,
+		true,
+		false,
+		or,
+		do,
+	},
+	keywordstyle=[1]\color{black}\bf,
+	keywords=[2] {
+		invariant,
+		precond,
+		postcond
+	},
+	keywordstyle=[2]\color{blue}\bf
+}
+
+\lstset{
+	language 		= 	pseudo,
+	basicstyle		=	\ttfamily,
+	mathescape		=	true,
+	escapeinside	=	||,
+	tabsize			=	2,
+	numbers			=	left,
+	commentstyle	=	\color{OliveGreen},
+	stringstyle		=	\color{mLightBrown},
+	upquote			=	true,
+	morestring		=	[b]',
+	moredelim		=	[l][\rmfamily\itshape]{@},
+	comment			=	[l]{//},
+	morecomment		=	[s]{/*}{*/},
+	commentstyle=\color{Gray}\ttfamily,
+	showstringspaces=	false,
+	showtabs		=	false,
+	autogobble
+}
+
+%% Other %%
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+
+%**************************************************************************************************************%
+%______________________________________________________________________________________________________________%
+
+\begin{document}
+\title{\textbf{EECS 3311 - Lab 05\\Design Report}}
+\author{Amir Mohamad, Saniz Momin, Akif Prasla, Hasnain Saifee\\\\TA - ta name}
+\date{Nov 7, 2021}
+\maketitle
+\tableofcontents
+\clearpage
+
+\section{Introduction}
+\clearpage
+
+\section{System Design}
+\subsection{Overview}
+\clearpage
+
+\section{Front end}
+\subsection{Overview}
+
+\subsection{Class Diagram}
+\begin{center}
+    front end class diagram here
+\end{center}
+\clearpage
+\subsection{Classes}
+list classes here
+
+\clearpage
+
+\section{Back end}
+\subsection{Overview}
+
+\subsection{Class Diagram}
+\begin{center}
+    back end class diagram here
+\end{center}
+\clearpage
+\subsection{Classes}
+list classes here
+
+\clearpage
+
+\section{Implementation}
+\subsection{Class Implementation}
+
+\subsection{Execution}
+
+\section{Tools}
+\subsection{Source Code}
+\subsection{Build}
+
+\section{Conclusion}
+
+
+\end{document}
