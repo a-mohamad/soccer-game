@@ -61,13 +61,13 @@ public class PlayerCollection implements  Iterable<GamePlayer>{
 
     @Override
     public Iterator<GamePlayer> iterator() {
-        return new PlayerIterator(this);
+        return new PlayerCollectionIterator(this);
     }
 
-    static class  PlayerIterator  implements Iterator<GamePlayer> {
+    static class PlayerCollectionIterator implements Iterator<GamePlayer> {
         private Node current;
 
-        public PlayerIterator(PlayerCollection playerCollection) {
+        public PlayerCollectionIterator(PlayerCollection playerCollection) {
             this.current = playerCollection.getHead();
         }
         @Override
