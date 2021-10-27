@@ -10,4 +10,9 @@ public class PlayerStatistics {
     public void setStatistics(Integer score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return score.toString();
+    }
 }
