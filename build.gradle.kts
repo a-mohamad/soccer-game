@@ -50,14 +50,20 @@ tasks.test {
 
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
-}
 
-tasks.jacocoTestReport {
     reports {
         xml.required.set(false)
         csv.required.set(false)
         html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco"))
     }
+}
+
+tasks.withType<JacocoReport> {
+    classDirectories.setFrom(
+        sourceSets.main.get().output.asFileTree.matching {
+            exclude("soccergame/main/MiniSoccerApp.class")
+        }
+    )
 }
 
 tasks.register<Jar>("uberJar") {
