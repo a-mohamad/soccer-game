@@ -1,6 +1,6 @@
 # Mini Soccer Game
 
-A mini soccer game written in Java 11 using Java Swing.
+A mini soccer game written in Java 16 using Java Swing.
 
 Featuring design pattern/principle:
 
