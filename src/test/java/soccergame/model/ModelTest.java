@@ -1,14 +1,20 @@
 package soccergame.model;
 
+import com.sun.jdi.connect.Connector;
 import org.junit.jupiter.api.Test;
-import soccergame.model.players.GamePlayer;
-import soccergame.model.players.Goalkeeper;
-import soccergame.model.players.PlayerFactory;
-import soccergame.model.players.Striker;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import soccergame.model.players.*;
 
 import java.awt.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.*;
 
 /**
  * Collection of tests for the soccergame's model code
@@ -64,6 +70,17 @@ public class ModelTest {
         goalkeeper.toString();
     }
 
+    static Stream<Arguments> listOfPlayers() {
+        PlayerCollection players = new PlayerCollection();
+        players.addAll(List.of(new Striker("player 1", Color.BLUE),
+                new Striker("player 2", Color.BLUE),
+                new Striker("player 3", Color.BLUE),
+                new Goalkeeper("player 4", Color.BLUE),
+                new Goalkeeper("player 5", Color.BLUE),
+                new Goalkeeper("player 6", Color.BLUE)));
+
+        return Stream.of(Arguments.of(players));
+    }
     @Test
     void strikerTest() {
         striker.isPlayerHasBall();
@@ -82,6 +99,13 @@ public class ModelTest {
         striker.setPlayerStatistics(10);
         striker.compareTo(goalkeeper);
         striker.toString();
+    }
+
+    @ParameterizedTest
+    @MethodSource("listOfPlayers")
+    void playerIterator(PlayerCollection players) {
+        for (GamePlayer player: players)
+            assertEquals(player.getPlayerColor(), Color.BLUE);
     }
 
 

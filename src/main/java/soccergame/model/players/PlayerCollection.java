@@ -1,9 +1,10 @@
 package soccergame.model.players;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class PlayerCollection implements  Iterable<GamePlayer>{
+public class PlayerCollection implements  Iterable<GamePlayer> {
     private static class Node {
         private GamePlayer data;
         private Node next;
@@ -13,6 +14,7 @@ public class PlayerCollection implements  Iterable<GamePlayer>{
             this.data = data;
         }
     }
+
     protected Node head, tail;
     protected int size = 0;
 
@@ -38,6 +40,11 @@ public class PlayerCollection implements  Iterable<GamePlayer>{
                 return player;
         }
         return null;
+    }
+
+    public void addAll(Collection<GamePlayer> players) {
+        for(GamePlayer player: players)
+            add(player);
     }
 
     public void add(GamePlayer player) {
