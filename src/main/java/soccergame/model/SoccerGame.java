@@ -7,6 +7,8 @@ import soccergame.model.players.*;
 
 public class SoccerGame {
 
+	private TimerTask timerTask;
+
 	private Integer timeRemaining;
 
 	private Integer goal;
@@ -32,7 +34,7 @@ public class SoccerGame {
 
 	private void startGame() {
 		Timer timer = new Timer();
-		TimerTask timerTask = new TimerTask() {
+		timerTask = new TimerTask() {
 			@Override
 			public void run() {
 				if (!isPaused()) {
@@ -55,6 +57,10 @@ public class SoccerGame {
 			}
 		};
 		timer.schedule(timerTask, 1000, 1000);
+	}
+
+	public TimerTask getTimerTask() {
+		return timerTask;
 	}
 
 	public Integer getTimeRemaining() {

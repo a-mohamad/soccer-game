@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class PlayerCollection implements  Iterable<GamePlayer> {
+
     private static class Node {
         private GamePlayer data;
         private Node next;
@@ -42,6 +43,15 @@ public class PlayerCollection implements  Iterable<GamePlayer> {
         return null;
     }
 
+    public GamePlayer get(int index) {
+        int i = 0;
+        for (GamePlayer player: this) {
+            if (i++ == index)
+                return player;
+        }
+        return null;
+    }
+
     public void addAll(Collection<GamePlayer> players) {
         for(GamePlayer player: players)
             add(player);
@@ -60,6 +70,10 @@ public class PlayerCollection implements  Iterable<GamePlayer> {
         }
         tail.next = null;
         size++;
+    }
+
+    public int size() {
+        return size;
     }
 
     private Node getHead() {
