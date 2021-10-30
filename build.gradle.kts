@@ -61,7 +61,7 @@ tasks.jacocoTestReport {
 tasks.withType<JacocoReport> {
     classDirectories.setFrom(
         sourceSets.main.get().output.asFileTree.matching {
-            exclude("soccergame/main/MiniSoccerApp.class")
+            exclude("soccergame/main/MiniSoccerApp.class", "soccergame/view/*", "soccergame/controller/*")
         }
     )
 }
