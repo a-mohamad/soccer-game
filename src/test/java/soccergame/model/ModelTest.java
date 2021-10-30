@@ -83,6 +83,14 @@ public class ModelTest {
         striker.compareTo(goalkeeper);
         striker.toString();
     }
+    
+    @Test
+    void PlayerStatistics() {
+    	striker.setPlayerStatistics(5);
+    	int score = striker.getPlayerStatistics();
+    	assertTrue(5 == score);
+    	assertEquals("striker scored 5 goals", striker.toString());
+    }
 
 
 }
