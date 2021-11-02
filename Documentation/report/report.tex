@@ -115,10 +115,50 @@
 \clearpage
 
 \section{Introduction}
-\clearpage
+
+The software project is about generating a soccer game where there are two players:
+a goalkeeper and a striker. You have 60 seconds to score as many goals as possible,
+after each goal is scored your score increments and the game is paused. You can resume
+the game by pressing key R or by going to the menu option selecting control which has a
+sub menu resume and pause. To score a goal the striker can move by pressing up down left
+right key and to score a goal striker has to press space key. The goalkeeper randomly defends
+the gate by moving in the left and right direction bounded by the gate's length. After the
+timer becomes 0 the user gets the statistics of how many goals the striker has scored and how
+many saves has the goalkeeper made. When the game is over, the user can start playing again
+by navigating to the menu bar, clicking on the Game menu and clicking to a new game or exit
+if the user wants to end playing. The main-goal of this software project is to use OOP concepts
+and efficient software design patterns to write code efficiently and follow the DRY principle
+which is (Don't repeat yourself). In this software project, to properly organize our soccer
+game system, the system is divided into a set of layers where each layer focuses on a
+specific aspect and has an abstraction level. MVC architectural pattern is used to divide
+the system into three main subsystems where the model comprises data of the system, for
+example keeping record of total goals and saves of striker and goalkeeper respectively.
+The view consists of the user interface part where the data in the model subsystem can be
+viewed. The controller which handles interaction between the modal and the view. The detailed
+design of the software system can be seen using creational design patterns such as factory
+design pattern as well as prototype design pattern which focuses on creation of objects.
+For example players are created via the PlayerFactory class which has getplayer method
+which takes string as parameter. All that is needed to pass is a string and it will
+return the appropriate object. Doing a project with partial implementation takes time
+to understand the logic and the functionality of code written. It took a while until
+we all understood what is the role of each subsystem, once we got that it was easy to
+implement and finish the rest. Based on our understanding of this software project we
+are going to write the report with the basic idea and the designs implemented for the
+top level and organization of the software project. We will create a UML diagram to make
+our explanation of the design patterns used more clear. We will then explain the main
+elements in this system and explain their functionalities. We will conclude our report
+by giving brief overview of our journey in building this software project.
 
 \section{System Design}
 \subsection{Overview}
+\begin{center}
+	\begin{figure}[H]
+		\hspace{50pt}
+		\includegraphics[scale=0.6]{diagrams/system-diagram/system-diagram-pkg.png}
+		\caption{The system design \code{SOCCERGAME}'s (example placeholder image)}
+		\label{fig:systemdeisgn}
+	\end{figure}
+\end{center}
 \clearpage
 
 \section{Front end}
@@ -126,11 +166,16 @@
 
 \subsection{Class Diagram}
 \begin{center}
-    front end class diagram here
+	\begin{figure}[H]
+		\hspace{50pt}
+		\includegraphics[scale=0.6]{diagrams/class-diagrams/gui-model/gui-model-cd.png}
+		\caption{The class diagram of \code{SOCCERGAME}'s front end model (example placeholder image)}
+		\label{fig:frontend}
+	\end{figure}
 \end{center}
 \clearpage
 \subsection{Classes}
-list classes here
+list frontend classes here
 
 \clearpage
 
@@ -139,24 +184,35 @@ list classes here
 
 \subsection{Class Diagram}
 \begin{center}
-    back end class diagram here
+	\begin{figure}[H]
+		\hspace{30pt}
+		\includegraphics[scale=.5]{diagrams/class-diagrams/shape-model/shape-model-alt-cd.png}
+		\caption{The class diagram of \code{SOCCERGAME}'s player model (example placeholder image)}
+		\label{fig:backend}
+	\end{figure}
 \end{center}
 \clearpage
 \subsection{Classes}
-list classes here
+list backend classes here
 
 \clearpage
 
 \section{Implementation}
 \subsection{Class Implementation}
-
+disscuss class implementation
 \subsection{Execution}
-
+disscuss execution process using gradle
 \section{Tools}
 \subsection{Source Code}
+IDE: IntelliJ IDEA 2021.2.1, to implement Java classes\\
+Documentation: vscode, \LaTeX, for documentation (dessign report, etc.)
 \subsection{Build}
-
+Build: Gradle 7.2 (to manage dependencies and build)\\
+Java Version: openjdk version "16.0.1" 2021-04-20\\
+Unit Testing: junit-jupiter-engine:5.8.1\\
+Coverage: JaCoCo library
 \section{Conclusion}
+conclusion
 
 
 \end{document}
