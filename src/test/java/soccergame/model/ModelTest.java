@@ -22,7 +22,12 @@ class ModelTest {
     final PlayerFactory pf = new PlayerFactory();
     final Striker striker = (Striker) pf.getPlayer("striker");
     final Goalkeeper goalkeeper = (Goalkeeper) pf.getPlayer("goalkeeper");
+    final Point strikerPos = striker.getPlayerPosition();
+    final Point goalkeeperPos = goalkeeper.getPlayerPosition();
+    final int goalkeeperMoveStep = 10;
+    final int strikerMoveStep = 5;
     static final Random random = new Random();
+
 
     @Test
     void playerFactoryTest() {
@@ -39,57 +44,116 @@ class ModelTest {
 
     @Test
     void goalkeeperTest() {
-        goalkeeper.isPlayerHasBall();
+        assertFalse(goalkeeper.isPlayerHasBall());
         goalkeeper.grabsBall();
+        assertTrue(goalkeeper.isPlayerHasBall());
         goalkeeper.moveRandomly();
-        goalkeeper.moveLeft();
-        goalkeeper.moveRight();
-        goalkeeper.moveUp();
-        goalkeeper.moveDown();
         goalkeeper.shootBall();
         assertEquals("goalkeeper", goalkeeper.getPlayerName().toLowerCase());
         assertEquals(Color.YELLOW, goalkeeper.getPlayerColor());
-        goalkeeper.setInitialPosition();
+        resetPositions();
         assertEquals(new Point(280, 70), goalkeeper.getPlayerPosition());
         goalkeeper.setPlayerPosition(new Point(30, 30));
-        goalkeeper.getPlayerStatistics();
         assertEquals(0, goalkeeper.compareTo(striker));
-        goalkeeper.setPlayerStatistics(10);
-        assertEquals("goalkeeper caught 10 balls", goalkeeper.toString());
     }
 
     @Test
-    void strikerTest() {
-        striker.isPlayerHasBall();
+    void strikerTest() throws InterruptedException {
         striker.grabsBall();
-        striker.moveLeft();
-        striker.moveRight();
-        striker.moveUp();
-        striker.moveDown();
+        assertTrue(striker.isPlayerHasBall());
+        SoccerBall.getSoccerBall().setVelocity(8.0);
         striker.shootBall();
+        // bypass timer task for ball
+        SoccerBall.getSoccerBall().setPosition(new Point());
+        assertFalse(striker.isPlayerHasBall());
         assertEquals("striker", striker.getPlayerName().toLowerCase());
         assertEquals(Color.BLUE, striker.getPlayerColor());
-        striker.setInitialPosition();
+        resetPositions();
         assertEquals(new Point(500, 450), striker.getPlayerPosition());
         striker.setPlayerPosition(new Point(30, 30));
-        striker.getPlayerStatistics();
         assertEquals(0, striker.compareTo(goalkeeper));
-        striker.setPlayerStatistics(10);
-        assertEquals("striker scored 10 goals", striker.toString());
+    }
+
+    @Test
+    void moveLeftTest() {
+        goalkeeper.moveLeft();
+        striker.moveLeft();
+        goalkeeperPos.translate(-goalkeeperMoveStep, 0);
+        strikerPos.translate(-strikerMoveStep, 0);
+        assertEquals(goalkeeper.getPlayerPosition(), goalkeeperPos);
+        assertEquals(striker.getPlayerPosition(), strikerPos);
+        resetPositions();
+    }
+
+    @Test
+    void moveRightTest() {
+        goalkeeper.moveRight();
+        striker.moveRight();
+        goalkeeperPos.translate(+goalkeeperMoveStep, 0);
+        strikerPos.translate(+strikerMoveStep, 0);
+        assertEquals(goalkeeper.getPlayerPosition(), goalkeeperPos);
+        assertEquals(striker.getPlayerPosition(), strikerPos);
+        resetPositions();
+    }
+
+    @Test
+    void moveUpTest() {
+        goalkeeper.moveUp();
+        striker.moveUp();
+        goalkeeperPos.translate(0, -strikerMoveStep);
+        strikerPos.translate(0, -strikerMoveStep);
+        assertEquals(goalkeeper.getPlayerPosition(), goalkeeperPos);
+        assertEquals(striker.getPlayerPosition(), strikerPos);
+        resetPositions();
+    }
+
+    @Test
+    void moveDownTest() {
+        goalkeeper.moveDown();
+        striker.moveDown();
+        goalkeeperPos.translate(0, +strikerMoveStep);
+        strikerPos.translate(0, +strikerMoveStep);
+        assertEquals(goalkeeper.getPlayerPosition(), goalkeeperPos);
+        assertEquals(striker.getPlayerPosition(), strikerPos);
+        resetPositions();
+        striker.setPlayerPosition(new Point(0, 350));
+        strikerPos.setLocation(new Point(0, 350));
+        striker.moveDown();
+        strikerPos.translate(0, +strikerMoveStep);
+        assertEquals(striker.getPlayerPosition(), strikerPos);
+        resetPositions();
+    }
+
+    void resetPositions() {
+        goalkeeper.setInitialPosition();
+        striker.setInitialPosition();
+        goalkeeperPos.setLocation(goalkeeper.getPlayerPosition());
+        strikerPos.setLocation(striker.getPlayerPosition());
+    }
+
+    @Test
+    void playerStatisticsTest() {
+        goalkeeper.setPlayerStatistics(5);
+        striker.setPlayerStatistics(5);
+        assertEquals(5, striker.getPlayerStatistics());
+        assertEquals(5, striker.getPlayerStatistics());
+        assertEquals("goalkeeper caught 5 balls", goalkeeper.toString());
+        assertEquals("striker scored 5 goals", striker.toString());
     }
 
     @Test
     void soccerGameTest() {
-        // start the soccer game
+        // start the simulation of a simple game
         SoccerGame game = new SoccerGame();
         game.setPaused(false);
         game.setOver(false);
         assertEquals("striker", game.getGamePlayers().get(0).getPlayerName());
         assertEquals("goalkeeper", game.getGamePlayers().get(1).getPlayerName());
-        game.getActivePlayer();
+        assertEquals("striker", game.getActivePlayer().getPlayerName());
         assertEquals(Color.white, SoccerBall.getSoccerBall().getColor());
 
         int i;
+
         // kick ball past half point
         for (i = 0; i < 1; i++) {
             SoccerBall.getSoccerBall().setPosition(new Point(0, 100));
@@ -116,14 +180,7 @@ class ModelTest {
         assertTrue(game.isOver());
     }
 
-    @Test
-    void playerStatisticsTest() {
-        striker.setPlayerStatistics(5);
-        int score = striker.getPlayerStatistics();
-        assertEquals(5, score);
-        assertEquals("striker scored 5 goals", striker.toString());
-    }
-
+    // collection of players to test PlayerCollection
     static Stream<Arguments> listOfPlayers() {
         PlayerCollection players = new PlayerCollection();
         players.addAll(List.of(new Striker("player 1", Color.BLUE),
