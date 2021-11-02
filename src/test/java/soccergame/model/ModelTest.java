@@ -19,15 +19,33 @@ import static org.junit.jupiter.api.Assertions.*;
  * Collection of tests for the soccergame's model code
  */
 class ModelTest {
+    static final Random random = new Random();
     final PlayerFactory pf = new PlayerFactory();
     final Striker striker = (Striker) pf.getPlayer("striker");
-    final Goalkeeper goalkeeper = (Goalkeeper) pf.getPlayer("goalkeeper");
     final Point strikerPos = striker.getPlayerPosition();
+    final Goalkeeper goalkeeper = (Goalkeeper) pf.getPlayer("goalkeeper");
     final Point goalkeeperPos = goalkeeper.getPlayerPosition();
     final int goalkeeperMoveStep = 10;
     final int strikerMoveStep = 5;
-    static final Random random = new Random();
 
+    // collection of players to test PlayerCollection
+    static Stream<Arguments> listOfPlayers() {
+        PlayerCollection players = new PlayerCollection();
+        players.addAll(List.of(new Striker("player 1", Color.BLUE),
+                new Striker("player 2", Color.YELLOW),
+                new Striker("player 3", Color.RED),
+                new Goalkeeper("player 4", Color.PINK),
+                new Goalkeeper("player 5", Color.GREEN),
+                new Goalkeeper("player 6", Color.BLUE)));
+
+        for (GamePlayer player : players) {
+            player.setPlayerStatistics(random.nextInt());
+            if (player.getClass() == Goalkeeper.class)
+                player.setPlayerPosition(new Point(600, 0));
+        }
+
+        return Stream.of(Arguments.of(players));
+    }
 
     @Test
     void playerFactoryTest() {
@@ -178,25 +196,6 @@ class ModelTest {
         game.setPaused(false);
         game.getTimerTask().run();
         assertTrue(game.isOver());
-    }
-
-    // collection of players to test PlayerCollection
-    static Stream<Arguments> listOfPlayers() {
-        PlayerCollection players = new PlayerCollection();
-        players.addAll(List.of(new Striker("player 1", Color.BLUE),
-                new Striker("player 2", Color.YELLOW),
-                new Striker("player 3", Color.RED),
-                new Goalkeeper("player 4", Color.PINK),
-                new Goalkeeper("player 5", Color.GREEN),
-                new Goalkeeper("player 6", Color.BLUE)));
-
-        for (GamePlayer player : players) {
-            player.setPlayerStatistics(random.nextInt());
-            if (player.getClass() == Goalkeeper.class)
-                player.setPlayerPosition(new Point(600, 0));
-        }
-
-        return Stream.of(Arguments.of(players));
     }
 
     @ParameterizedTest

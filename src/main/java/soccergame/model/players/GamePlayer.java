@@ -6,79 +6,77 @@ import java.awt.*;
 
 public abstract class GamePlayer implements Comparable<GamePlayer> {
 
-	protected final String playerName;
+    protected final String playerName;
 
-	protected final Color playerColor;
+    protected final Color playerColor;
+    protected final PlayerStatistics playerStatistics;
+    protected Point playerPosition;
 
-	protected Point playerPosition;
+    public GamePlayer(String name, Color color) {
+        playerName = name;
+        playerColor = color;
+        playerStatistics = new PlayerStatistics();
+        setInitialPosition();
+    }
 
-	protected final PlayerStatistics playerStatistics;
+    public boolean isPlayerHasBall() {
+        Point playerPositionCenter = new Point(getPlayerPosition().x + 15, getPlayerPosition().y + 30);
+        return playerPositionCenter.distance(SoccerBall.getSoccerBall().getPosition()) < 55;
+    }
 
-	public GamePlayer(String name, Color color) {
-		playerName = name;
-		playerColor = color;
-		playerStatistics = new PlayerStatistics();
-		setInitialPosition();
-	}
+    public void grabsBall() {
+        SoccerBall ball = SoccerBall.getSoccerBall();
+        if (getPlayerPosition().x + 15 > ball.getPosition().x) {
+            ball.setPosition(new Point(getPlayerPosition().x - 10, getPlayerPosition().y + 55));
+        } else {
+            ball.setPosition(new Point(getPlayerPosition().x + 20, getPlayerPosition().y + 55));
+        }
+    }
 
-	public boolean isPlayerHasBall() {
-		Point playerPositionCenter = new Point(getPlayerPosition().x + 15, getPlayerPosition().y + 30);
-		return playerPositionCenter.distance(SoccerBall.getSoccerBall().getPosition()) < 55;
-	}
+    public abstract void moveLeft();
 
-	public void grabsBall() {
-		SoccerBall ball = SoccerBall.getSoccerBall();
-		if (getPlayerPosition().x + 15 > ball.getPosition().x) {
-			ball.setPosition(new Point(getPlayerPosition().x - 10, getPlayerPosition().y + 55));
-		} else {
-			ball.setPosition(new Point(getPlayerPosition().x + 20, getPlayerPosition().y + 55));
-		}
-	}
+    public abstract void moveRight();
 
-	public abstract void moveLeft();
+    public abstract void moveUp();
 
-	public abstract void moveRight();
+    public abstract void moveDown();
 
-	public abstract void moveUp();
+    public abstract void shootBall();
 
-	public abstract void moveDown();
+    public String getPlayerName() {
+        return playerName;
+    }
 
-	public abstract void shootBall();
+    public Color getPlayerColor() {
+        return playerColor;
+    }
 
-	public String getPlayerName() {
-		return playerName;
-	}
+    public Point getPlayerPosition() {
+        return playerPosition;
+    }
 
-	public Color getPlayerColor() {
-		return playerColor;
-	}
+    public void setPlayerPosition(Point newPosition) {
+        playerPosition = newPosition;
+        if (isPlayerHasBall()) {
+            grabsBall();
+        }
+    }
 
-	public Point getPlayerPosition() {
-		return playerPosition;
-	}
+    public abstract void setInitialPosition();
 
-	public abstract void setInitialPosition();
+    public Integer getPlayerStatistics() {
+        return playerStatistics.getStatistics();
+    }
 
-	public void setPlayerPosition(Point newPosition) {
-		playerPosition = newPosition;
-		if (isPlayerHasBall()) {
-			grabsBall();
-		}
-	}
+    public void setPlayerStatistics(Integer newStatistics) {
+        playerStatistics.setStatistics(newStatistics);
+    }
 
-	public Integer getPlayerStatistics() {
-		return playerStatistics.getStatistics();
-	}
+    @Override
+    public int compareTo(GamePlayer otherPlayer) {
+        return otherPlayer.getPlayerStatistics().compareTo(this.getPlayerStatistics());
+    }
 
-	public void setPlayerStatistics(Integer newStatistics) {
-		playerStatistics.setStatistics(newStatistics);
-	}
-
-	@Override
-	public int compareTo(GamePlayer otherPlayer) {
-		return otherPlayer.getPlayerStatistics().compareTo(this.getPlayerStatistics());
-	}
-
-	@Override
-	public abstract String toString();
+    @Override
+    public abstract String toString();
 }
