@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/a-mohamad/soccer-game.svg?token=PczqEBqPPLxydpqmpTCv&branch=main)](https://app.travis-ci.com/a-mohamad/soccer-game)
+
 # Mini Soccer Game
 
 A mini soccer game written in Java 16 using Java Swing.
