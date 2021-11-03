@@ -6,15 +6,28 @@ import soccergame.view.GamePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A menu listener for the {@code GamePanel}. Implements {@code ActionListener}
+ * to control the game flow.
+ */
 public class MenubarListener implements ActionListener {
-
+    /**
+     * The {@code GamePanel} to apply the action listener to.
+     */
     private final GamePanel gamePanel;
 
+    /**
+     * Construct a {@code MenubarListener} with a specified panel.
+     *
+     * @param panel the game panel to listen for menu events
+     */
     public MenubarListener(GamePanel panel) {
         gamePanel = panel;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         SoccerGame soccerGame = gamePanel.getGame();

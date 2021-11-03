@@ -7,6 +7,9 @@ import soccergame.view.GamePanel;
 
 import javax.swing.*;
 
+/**
+ * The main entry point to the SOCCERGAME application.
+ */
 public class MiniSoccerApp {
 
     public static void main(String[] args) {

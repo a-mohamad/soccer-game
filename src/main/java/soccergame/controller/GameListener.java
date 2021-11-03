@@ -6,19 +6,35 @@ import soccergame.view.GamePanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * A game listener for the {@code Striker}. Implements {@code KeyListener}
+ * to control the player movement.
+ */
 public class GameListener implements KeyListener {
-
+    /**
+     * The {@code GamePanel} to apply the key listener to.
+     */
     private final GamePanel gamePanel;
 
+    /**
+     * Construct a {@code GameListener} with a specified panel.
+     *
+     * @param panel the game panel to listen for key events
+     */
     public GameListener(GamePanel panel) {
         gamePanel = panel;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         SoccerGame soccerGame = gamePanel.getGame();
@@ -45,8 +61,10 @@ public class GameListener implements KeyListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }
