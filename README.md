@@ -1,5 +1,5 @@
 [![build](https://github.com/a-mohamad/soccer-game/actions/workflows/codecov.yml/badge.svg?branch=main)](https://github.com/a-mohamad/soccer-game/actions/workflows/codecov.yml)
-[![codecov](https://codecov.io/gh/a-mohamad/soccer-game/branch/main/graph/badge.svg?token=6HWXBQ4BG7)](https://codecov.io/gh/a-mohamad/soccer-game)
+![Codecov](https://img.shields.io/codecov/c/gh/a-mohamad/soccer-game?token=6HWXBQ4BG7)
 # Mini Soccer Game
 
 A mini soccer game written in Java 16 using Java Swing.
