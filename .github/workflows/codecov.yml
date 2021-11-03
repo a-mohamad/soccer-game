@@ -30,7 +30,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew check
-          ./gradle jacocoTestReport
+          ./gradlew jacocoTestReport
       - name: upload
         id: jacoco
         uses: codecov/codecov-action@v1
