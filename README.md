@@ -1,4 +1,4 @@
-[![Build Status](https://app.travis-ci.com/a-mohamad/soccer-game.svg?token=PczqEBqPPLxydpqmpTCv&branch=main)](https://app.travis-ci.com/a-mohamad/soccer-game)
+[![build](https://github.com/a-mohamad/soccer-game/actions/workflows/codecov.yml/badge.svg?branch=main)](https://github.com/a-mohamad/soccer-game/actions/workflows/codecov.yml)
 [![codecov](https://codecov.io/gh/a-mohamad/soccer-game/branch/main/graph/badge.svg?token=6HWXBQ4BG7)](https://codecov.io/gh/a-mohamad/soccer-game)
 # Mini Soccer Game
 
