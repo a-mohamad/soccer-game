@@ -59,3 +59,4 @@ including `pause` and `resume` will be disabled until a new `SoccerGame` is star
 | In game    | Game over   |
 | :------------: | :----------: |
 | ![In game](Screenshots/in_game.png) | ![Game over](Screenshots/game_over.png) |
+
