@@ -67,7 +67,7 @@ class ModelTest {
         goalkeeper.shootBall();
         assertEquals("goalkeeper", goalkeeper.getPlayerName().toLowerCase());
         assertEquals(Color.YELLOW, goalkeeper.getPlayerColor());
-        resetPositions();
+        resetPlayerPositions();
         assertEquals(new Point(280, 70), goalkeeper.getPlayerPosition());
         goalkeeper.setPlayerPosition(new Point(30, 30));
         assertEquals(0, goalkeeper.compareTo(striker));
@@ -84,7 +84,7 @@ class ModelTest {
         assertFalse(striker.isPlayerHasBall());
         assertEquals("striker", striker.getPlayerName().toLowerCase());
         assertEquals(Color.BLUE, striker.getPlayerColor());
-        resetPositions();
+        resetPlayerPositions();
         assertEquals(new Point(500, 450), striker.getPlayerPosition());
         striker.setPlayerPosition(new Point(30, 30));
         assertEquals(0, striker.compareTo(goalkeeper));
@@ -123,7 +123,7 @@ class ModelTest {
         striker.moveLeft();
         assertEquals(new Point(-1000, -1000), goalkeeper.getPlayerPosition());
         assertEquals(new Point(-1000, -1000), striker.getPlayerPosition());
-        resetPositions();
+        resetPlayerPositions();
     }
 
     @Test
@@ -141,7 +141,7 @@ class ModelTest {
         striker.moveRight();
         assertEquals(new Point(1000, 1000), goalkeeper.getPlayerPosition());
         assertEquals(new Point(1000, 1000), striker.getPlayerPosition());
-        resetPositions();
+        resetPlayerPositions();
     }
 
     @Test
@@ -159,7 +159,7 @@ class ModelTest {
         striker.moveUp();
         assertEquals(new Point(-1000, -1000), goalkeeper.getPlayerPosition());
         assertEquals(new Point(-1000, -1000), striker.getPlayerPosition());
-        resetPositions();
+        resetPlayerPositions();
     }
 
     @Test
@@ -170,7 +170,7 @@ class ModelTest {
         strikerPos.translate(0, +strikerMoveStep);
         assertEquals(goalkeeper.getPlayerPosition(), goalkeeperPos);
         assertEquals(striker.getPlayerPosition(), strikerPos);
-        resetPositions();
+        resetPlayerPositions();
         striker.setPlayerPosition(new Point(0, 350));
         strikerPos.setLocation(new Point(0, 350));
         striker.moveDown();
@@ -183,10 +183,21 @@ class ModelTest {
         striker.moveDown();
         assertEquals(new Point(1000, 1000), goalkeeper.getPlayerPosition());
         assertEquals(new Point(1000, 1000), striker.getPlayerPosition());
-        resetPositions();
+        resetPlayerPositions();
     }
 
-    void resetPositions() {
+    @Test
+    public void moveRandomlyTest() {
+        // player is more to the right side
+        goalkeeper.setPlayerPosition(new Point(0, 0));
+        goalkeeper.moveRandomly();
+        // player is more to the left side
+        goalkeeper.setPlayerPosition(new Point(600, 0));
+        goalkeeper.moveRandomly();
+        resetPlayerPositions();
+    }
+
+    void resetPlayerPositions() {
         goalkeeper.setInitialPosition();
         striker.setInitialPosition();
         goalkeeperPos.setLocation(goalkeeper.getPlayerPosition());
@@ -295,15 +306,5 @@ class ModelTest {
             assertEquals(String.format("player %d", idx++), next.getPlayerName());
         }
         assertThrows(NoSuchElementException.class, iterator::next);
-    }
-
-    @ParameterizedTest
-    @MethodSource("listOfPlayers")
-    public void moveRandomlyTest(PlayerCollection players) {
-        for (GamePlayer player : players)
-            if (player.getClass() == Goalkeeper.class) {
-                player.setPlayerPosition(new Point(600, 600));
-                ((Goalkeeper) player).moveRandomly();
-            }
     }
 }
