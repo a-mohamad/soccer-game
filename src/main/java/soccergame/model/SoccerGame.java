@@ -180,13 +180,50 @@ public class SoccerGame {
     public void automateGoalkeeper() {
         SoccerBall soccerBall = SoccerBall.getSoccerBall();
         Goalkeeper goalkeeper = (Goalkeeper) gamePlayers.get("Goalkeeper");
-        if (soccerBall.onGoalkeeperSide()) {
+        if (inRange(soccerBall, goalkeeper)) {
             goalkeeper.grabsBall();
             goalkeeper.shootBall();
             goalkeeper.setPlayerStatistics(goalkeeper.getPlayerStatistics() + 1);
         } else {
             goalkeeper.moveRandomly();
         }
+    }
+
+    /**
+     * Check if the soccer ball is in the range of the goalkeeper or if it's a dead ball.
+     *
+     * @param soccerBall the soccer ball
+     * @param goalkeeper the goalkeeper
+     * @return {@code true} if the ball is out of bounds, or it's in the goalkeeper's range
+     */
+    public boolean inRange(SoccerBall soccerBall, Goalkeeper goalkeeper) {
+        // out of bounds case
+        if (soccerBall.onGoalkeeperSide() && (soccerBall.getPosition().x > 400 || soccerBall.getPosition().x < 200))
+            return true;
+
+        int pointX = soccerBall.getPosition().x + 10;
+        int pointY = soccerBall.getPosition().y + 10;
+
+        int x1 = goalkeeper.getPlayerPosition().x, y1 = goalkeeper.getPlayerPosition().y;
+        int x2 = goalkeeper.getPlayerPosition().x + 30, y2 = goalkeeper.getPlayerPosition().y;
+        int x3 = goalkeeper.getPlayerPosition().x, y3 = goalkeeper.getPlayerPosition().y + 70;
+        int x4 = goalkeeper.getPlayerPosition().x + 30, y4 = goalkeeper.getPlayerPosition().y + 70;
+
+        // a point in a rectangle forms 4 triangles that sum to the rectangles area
+        double A = 30 * 70;
+        double A1 = area(pointX, pointY, x1, y1, x2, y2);
+        double A2 = area(x1, y2, pointX, pointY, x3, y3);
+        double A3 = area(x2, y2, x4, y4, pointX, pointY);
+        double A4 = area(pointX, pointY, x3, y3, x4, y4);
+
+        return A == (A1 + A2 + A3 + A4);
+    }
+
+    // helper method to calculate the area of a triangle given all components.
+    private double area(int x1, int y1, int x2, int y2, int x3, int y3) {
+        // using formula for triangle
+        return Math.abs((x1*(y2-y3) + x2*(y3-y1)+
+                x3*(y1-y2))/2.0);
     }
 
     /**

@@ -227,6 +227,11 @@ class ModelTest {
 
         int i;
 
+        // ball out of bounds case : .get(1) is a goalkeeper by design
+        SoccerBall.getSoccerBall().setPosition(new Point(800, 100));
+        assertTrue(game.inRange(SoccerBall.getSoccerBall(), (Goalkeeper) game.getGamePlayers().get(1)));
+        SoccerBall.getSoccerBall().resetSoccerBall();
+
         // kick ball past half point
         for (i = 0; i < 1; i++) {
             SoccerBall.getSoccerBall().setPosition(new Point(0, 100));
