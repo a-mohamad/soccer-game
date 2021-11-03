@@ -38,11 +38,8 @@ class ModelTest {
                 new Goalkeeper("player 5", Color.GREEN),
                 new Goalkeeper("player 6", Color.BLUE)));
 
-        for (GamePlayer player : players) {
+        for (GamePlayer player : players)
             player.setPlayerStatistics(random.nextInt());
-            if (player.getClass() == Goalkeeper.class)
-                player.setPlayerPosition(new Point(600, 0));
-        }
 
         return Stream.of(Arguments.of(players));
     }
