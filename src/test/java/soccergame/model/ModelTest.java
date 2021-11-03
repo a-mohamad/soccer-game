@@ -55,9 +55,7 @@ class ModelTest {
         GamePlayer goalkeeper = pf.getPlayer("Goalkeeper");
         assertEquals(goalkeeper.getClass(), Goalkeeper.class);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            pf.getPlayer("invalid");
-        });
+        assertThrows(IllegalArgumentException.class, () -> pf.getPlayer("invalid"));
     }
 
     @Test
@@ -76,7 +74,7 @@ class ModelTest {
     }
 
     @Test
-    void strikerTest() throws InterruptedException {
+    void strikerTest() {
         striker.grabsBall();
         assertTrue(striker.isPlayerHasBall());
         SoccerBall.getSoccerBall().setVelocity(8.0);
@@ -90,6 +88,24 @@ class ModelTest {
         assertEquals(new Point(500, 450), striker.getPlayerPosition());
         striker.setPlayerPosition(new Point(30, 30));
         assertEquals(0, striker.compareTo(goalkeeper));
+        SoccerBall.getSoccerBall().resetSoccerBall();
+    }
+
+    @Test
+    void soccerBallTest() {
+        SoccerBall.getSoccerBall().resetSoccerBall();
+        assertFalse(SoccerBall.getSoccerBall().inGate());
+        // 180 >  400 <  10 > 60 <
+        SoccerBall.getSoccerBall().setPosition(new Point(200, 40));
+        SoccerBall.getSoccerBall().moveBallY(10);
+        assertTrue(SoccerBall.getSoccerBall().inGate());
+
+        // edge cases return false
+        SoccerBall.getSoccerBall().resetSoccerBall();
+        SoccerBall.getSoccerBall().setPosition(new Point(200, -1000));
+        assertEquals(new Point(200,-1000), SoccerBall.getSoccerBall().getPosition());
+        assertFalse(SoccerBall.getSoccerBall().inGate());
+        SoccerBall.getSoccerBall().resetSoccerBall();
     }
 
     @Test
@@ -100,6 +116,13 @@ class ModelTest {
         strikerPos.translate(-strikerMoveStep, 0);
         assertEquals(goalkeeper.getPlayerPosition(), goalkeeperPos);
         assertEquals(striker.getPlayerPosition(), strikerPos);
+        // edge case, do nothing
+        goalkeeper.setPlayerPosition(new Point(-1000, -1000));
+        striker.setPlayerPosition(new Point(-1000, -1000));
+        goalkeeper.moveLeft();
+        striker.moveLeft();
+        assertEquals(new Point(-1000, -1000), goalkeeper.getPlayerPosition());
+        assertEquals(new Point(-1000, -1000), striker.getPlayerPosition());
         resetPositions();
     }
 
@@ -111,6 +134,13 @@ class ModelTest {
         strikerPos.translate(+strikerMoveStep, 0);
         assertEquals(goalkeeper.getPlayerPosition(), goalkeeperPos);
         assertEquals(striker.getPlayerPosition(), strikerPos);
+        // edge case, do nothing
+        goalkeeper.setPlayerPosition(new Point(1000, 1000));
+        striker.setPlayerPosition(new Point(1000, 1000));
+        goalkeeper.moveRight();
+        striker.moveRight();
+        assertEquals(new Point(1000, 1000), goalkeeper.getPlayerPosition());
+        assertEquals(new Point(1000, 1000), striker.getPlayerPosition());
         resetPositions();
     }
 
@@ -122,6 +152,13 @@ class ModelTest {
         strikerPos.translate(0, -strikerMoveStep);
         assertEquals(goalkeeper.getPlayerPosition(), goalkeeperPos);
         assertEquals(striker.getPlayerPosition(), strikerPos);
+        // edge case, do nothing
+        goalkeeper.setPlayerPosition(new Point(-1000, -1000));
+        striker.setPlayerPosition(new Point(-1000, -1000));
+        goalkeeper.moveUp();
+        striker.moveUp();
+        assertEquals(new Point(-1000, -1000), goalkeeper.getPlayerPosition());
+        assertEquals(new Point(-1000, -1000), striker.getPlayerPosition());
         resetPositions();
     }
 
@@ -139,6 +176,13 @@ class ModelTest {
         striker.moveDown();
         strikerPos.translate(0, +strikerMoveStep);
         assertEquals(striker.getPlayerPosition(), strikerPos);
+        // edge case, do nothing
+        goalkeeper.setPlayerPosition(new Point(1000, 1000));
+        striker.setPlayerPosition(new Point(1000, 1000));
+        goalkeeper.moveDown();
+        striker.moveDown();
+        assertEquals(new Point(1000, 1000), goalkeeper.getPlayerPosition());
+        assertEquals(new Point(1000, 1000), striker.getPlayerPosition());
         resetPositions();
     }
 
@@ -176,17 +220,21 @@ class ModelTest {
         for (i = 0; i < 1; i++) {
             SoccerBall.getSoccerBall().setPosition(new Point(0, 100));
             game.getTimerTask().run();
+            assertTrue(SoccerBall.getSoccerBall().onGoalkeeperSide());
         }
-
-        assertTrue(SoccerBall.getSoccerBall().onGoalkeeperSide());
+        // pause and unpause for a cycle
+        game.setPaused(true);
+        game.getTimerTask().run();
+        game.setPaused(false);
 
         // continue countdown
         for (; i < 59; i++)
             game.getTimerTask().run();
 
+        // edge case
         SoccerBall.getSoccerBall().setVelocity(1);
 
-        // score ball
+        // score ball in last cycle
         for (; i < 60; i++) {
             SoccerBall.getSoccerBall().setPosition(new Point(200, 40));
             game.getTimerTask().run();
@@ -204,6 +252,8 @@ class ModelTest {
         players.sort();
         for (int i = 1; i < players.size(); i++)
             assertTrue(players.get(i - 1).compareTo(players.get(i)) < 0);
+        PlayerCollection empty = new PlayerCollection();
+        empty.sort();
     }
 
     @ParameterizedTest
