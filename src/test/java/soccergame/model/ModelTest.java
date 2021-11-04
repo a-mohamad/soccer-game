@@ -101,6 +101,18 @@ class ModelTest {
         assertTrue(SoccerBall.getSoccerBall().inGate());
         assertFalse(SoccerBall.getSoccerBall().isDead());
 
+        // edge case velocity will be zero
+        SoccerBall.getSoccerBall().setVelocity(10);
+        SoccerBall.getSoccerBall().setPosition(new Point(200, 1000));
+        SoccerBall.getSoccerBall().moveBallY(10);
+        assertEquals(0, SoccerBall.getSoccerBall().getVelocity());
+
+        SoccerBall.getSoccerBall().setVelocity(10);
+        SoccerBall.getSoccerBall().setPosition(new Point(200, -1000));
+        SoccerBall.getSoccerBall().moveBallY(10);
+        assertEquals(0, SoccerBall.getSoccerBall().getVelocity());
+
+
         // edge cases return false
         SoccerBall.getSoccerBall().resetSoccerBall();
         SoccerBall.getSoccerBall().setPosition(new Point(200, -1000));
