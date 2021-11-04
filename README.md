@@ -36,11 +36,14 @@ Use the <kbd>Space</kbd> to shoot bar with the `Stiker`.
 - [Design report](https://github.com/a-mohamad/soccer-game/blob/main/Documentation/report/report.pdf)
 
 ## How To Run
-video placeholder
+https://user-images.githubusercontent.com/75959959/140392172-e9c6f2fe-7990-443f-aa9d-551b84c3afb0.mp4
 
 or 
+
+
 
 ```
 ./gradlew run
 ```
+
 
