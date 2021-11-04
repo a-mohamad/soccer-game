@@ -184,9 +184,8 @@ public class SoccerGame {
             goalkeeper.grabsBall();
             goalkeeper.shootBall();
             goalkeeper.setPlayerStatistics(goalkeeper.getPlayerStatistics() + 1);
-        } else {
+        } else
             goalkeeper.moveRandomly();
-        }
     }
 
     /**
@@ -197,8 +196,8 @@ public class SoccerGame {
      * @return {@code true} if the ball is out of bounds, or it's in the goalkeeper's range
      */
     public boolean inRange(SoccerBall soccerBall, Goalkeeper goalkeeper) {
-        // out of bounds case
-        if (soccerBall.onGoalkeeperSide() && (soccerBall.getPosition().x > 400 || soccerBall.getPosition().x < 200))
+        // dead ball case
+        if (soccerBall.isDead())
             return true;
 
         int pointX = soccerBall.getPosition().x + 10;
@@ -222,8 +221,8 @@ public class SoccerGame {
     // helper method to calculate the area of a triangle given all components.
     private double area(int x1, int y1, int x2, int y2, int x3, int y3) {
         // using formula for triangle
-        return Math.abs((x1*(y2-y3) + x2*(y3-y1)+
-                x3*(y1-y2))/2.0);
+        return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) +
+                x3 * (y1 - y2)) / 2.0);
     }
 
     /**

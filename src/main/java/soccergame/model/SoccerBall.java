@@ -110,6 +110,24 @@ public class SoccerBall {
     }
 
     /**
+     * Check if the ball is in a dead state after being shot
+     *
+     * @return {@code true} if this soccer ball was failed to be scored
+     */
+    public boolean isDead() {
+       return soccerBall.getVelocity() == 0 && soccerBall.onGoalkeeperSide() && !inGate();
+    }
+
+    /**
+     * Get the velocity of this soccer ball.
+     *
+     * @return the velocity of this soccer ball
+     */
+    public double getVelocity() {
+        return velocity;
+    }
+
+    /**
      * Set the velocity of this soccer ball's movement.
      *
      * @param velocity the velocity of this soccer ball

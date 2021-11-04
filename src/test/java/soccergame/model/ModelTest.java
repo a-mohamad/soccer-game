@@ -90,17 +90,27 @@ class ModelTest {
 
     @Test
     void soccerBallTest() {
+        assertEquals(0, SoccerBall.getSoccerBall().getVelocity());
+        assertFalse(SoccerBall.getSoccerBall().isDead());
+
         SoccerBall.getSoccerBall().resetSoccerBall();
         assertFalse(SoccerBall.getSoccerBall().inGate());
         // 180 >  400 <  10 > 60 <
         SoccerBall.getSoccerBall().setPosition(new Point(200, 40));
         SoccerBall.getSoccerBall().moveBallY(10);
         assertTrue(SoccerBall.getSoccerBall().inGate());
+        assertFalse(SoccerBall.getSoccerBall().isDead());
 
         // edge cases return false
         SoccerBall.getSoccerBall().resetSoccerBall();
         SoccerBall.getSoccerBall().setPosition(new Point(200, -1000));
         assertEquals(new Point(200,-1000), SoccerBall.getSoccerBall().getPosition());
+        assertFalse(SoccerBall.getSoccerBall().inGate());
+        SoccerBall.getSoccerBall().resetSoccerBall();
+
+        SoccerBall.getSoccerBall().resetSoccerBall();
+        SoccerBall.getSoccerBall().setPosition(new Point(0, 1000));
+        assertEquals(new Point(0,1000), SoccerBall.getSoccerBall().getPosition());
         assertFalse(SoccerBall.getSoccerBall().inGate());
         SoccerBall.getSoccerBall().resetSoccerBall();
     }
@@ -184,7 +194,7 @@ class ModelTest {
     }
 
     @Test
-    public void moveRandomlyTest() {
+    void moveRandomlyTest() {
         // player is more to the right side
         goalkeeper.setPlayerPosition(new Point(0, 0));
         goalkeeper.moveRandomly();
@@ -231,10 +241,11 @@ class ModelTest {
 
         // kick ball past half point
         for (i = 0; i < 1; i++) {
-            SoccerBall.getSoccerBall().setPosition(new Point(0, 100));
+            SoccerBall.getSoccerBall().setPosition(new Point(300, 199));
             game.getTimerTask().run();
             assertTrue(SoccerBall.getSoccerBall().onGoalkeeperSide());
         }
+
         // pause and unpause for a cycle
         game.setPaused(true);
         game.getTimerTask().run();
