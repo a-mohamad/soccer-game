@@ -43,11 +43,7 @@ or
 
 
 ```
-./gradlew r
-
-
-
-un
+./gradlew run
 ```
 
 
