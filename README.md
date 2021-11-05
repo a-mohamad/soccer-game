@@ -19,6 +19,9 @@ Featuring design pattern/principle:
 | :------------: | :----------: |
 | ![In game](Screenshots/in_game.png) | ![Game over](Screenshots/game_over.png) |
 
+## Documentation
+- [Design report](https://github.com/a-mohamad/soccer-game/blob/main/Documentation/report/report.pdf)
+
 ## How To Use
 
 ### Controls
@@ -31,9 +34,6 @@ Use the <kbd>Space</kbd> to shoot bar with the `Stiker`.
 - <kbd>Q</kbd> to exit the application
 - <kbd>P</kbd> to pause the game
 - <kbd>R</kbd> to resume the game
-
-## Documentation
-- [Design report](https://github.com/a-mohamad/soccer-game/blob/main/Documentation/report/report.pdf)
 
 ## How To Run
 https://user-images.githubusercontent.com/75959959/140392172-e9c6f2fe-7990-443f-aa9d-551b84c3afb0.mp4
