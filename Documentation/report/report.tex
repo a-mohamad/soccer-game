@@ -192,14 +192,70 @@ list frontend classes here
 	\end{figure}
 \end{center}
 \clearpage
-\subsection{Classes}
-list backend classes here
+\subsection{Design of the Solution} 
+In this software project we are using combination of factory design pattern and prototype design pattern. 
+we have used combination of both in such a way that we are fulfilling the goal of factory design by hiding the 
+creation of object. prototype design pattern is used here keeping performance in mind i.e. other players such as
+GoalKeeper and Striker doesnt have code repitition since they extend an abstract GamePlayer class which contains
+necessary common methods thus reducing code repitition and keeping up the DRY rule which is (Dont repeat yourslef).
 
+\subsection{Classes}
+GamePlayer Class : this is one of the important class required in this software project it is an abstract class 
+and contains  essential methods such as moveLeft, moveRight, moveUp,moveDown, shootBall. without the GamePlayer
+class there is no existence of two players the goalKeeper and striker without which the soccerApp has no meaning.
+GoalKeeper Class :  this is the class which fulfills the role of goalKeeper. it keeps record of number of saves through
+playerStatistics class. it has functionality of moving randomly left-right guarding the goalpost.
+Striker Class : this is the class which fulfills the role of a striker. the purpose of moving near to the goalpost
+and scoring goals is what this class does with the help of methods inherited from its parent GamePlayer such as 
+movingUP down left right and shooting the ball.
 \clearpage
 
+\subsection{ OO DESIGN PRINCIPLES USED}
+Abstraction : In this software project, some unnecessary details are hidden from other classes. We will give you examples
+where abstraction is used. Take a look at the PlayerFactory class which is used to generate players such as goalkeeper
+and striker. The way object is created is completely hidden, what is done is a string is passed such as "goalkeeper" or 
+"striker" and object is returned.
+
+Encapsulation : In this software project, you will see the concept of encapsulation used where some logical implementation
+required for some classes to give required functionality is set to private so that other classes cannot access it. 
+Examples such as GamePanel class has private paint methods such as paintPausedText(), paintGate(), paintPentaltyLine() etc
+as they are only required for the proper implementattion of the GamePanel class.
+
+Inheritance : The concept of Inheritance is one of the most required principle used in this software project for better performance reasons.
+The GamePlayer class which is the parent class of goalKeeper and striker, doing this has enabled us to reduce code repititoin significantly.
+No child class even needed their own fields all they have is methods implemented which they inherited from GamePlayer class
+
+Polymorphism : In this software project the concept of polymorphism is also used. You will see in the PlayerFactory class that 
+players are instantiated with the syntax GamePlayer goalKeeper = PlayerFactory.getPlayer(“goalkeeper”) which upon decoding means Goalkeeper goalkeeper = new GoalKeeper(); 
+Polymorphism means “many forms” therefore though the object created is of the GamePlayer class but the methods takes form according to the new SpecificPlayer() where (SpecificPlayer- goalkeeper, striker) 
+and whenever any method is invoked such as striker.shootBall()it uses the implementation of that specificPlayer class though the
+ instant type is GamePlayer this happens because of inheritance where it is considering the latest form of the method. 
+Therefore if it is GamePlayer goalkeeper =  new GoalKeeper() and if goakKeeper.shootBall() is invoked this will call the
+ latest implementation of shootBall() which is implemented in the GoalKeeper class
+
+
 \section{Implementation}
-\subsection{Class Implementation}
-disscuss class implementation
+Following are the classes and their description:
+Main: the main runner class which runs the whole project.
+Model: 
+SoccerGame : this class contains all the important aspects as it has the object notations of the other classes like PlayerCollection and it then calls the PlayerFactory class to further initiate the GamePlayer(goalkeeper and striker). 
+SoccerBall: this class represents the ball of the game and deals with the positioning of the ball when in play.
+
+GamePlayer: this is a parent class to two other classes which contains the major features and attributes. It also determines the player movement, if the player has the ball or not, shoot the ball, etc.
+GoalKeeper, Striker: these two classes are the child class of GamePlayer. 
+PlayerStatistics: this class contains the statistics such as score.
+PlayerCollection: this class works as an iterator class and helps other classes which need to iterate.
+ 
+View: 
+GameMenuBar: this class represents the top portion of the view which has various controls such as resume, new game, end game, exit,etc
+GamePanel: this class initiates the main view and gives user a visual representation of the game inside the frame. All the visual components such as frame, color, etc. are contained in this.   
+
+Controller:
+GameListner: this is a control class which connects the model and view. This controls the user action such as movement and goal scored by connecting the other two packages.
+MenuBarListener:this is a control class which connects model and view. this class gives the functionality of resume and paused buttons so when paused button is pressed the whole game is paused along with the timer and when resume button is pressed game resumes. there is also a new Game button which loads and starts the game again.
+
+
+
 \subsection{Execution}
 disscuss execution process using gradle
 \section{Tools}
