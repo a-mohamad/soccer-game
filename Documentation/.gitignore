@@ -2,3 +2,4 @@
 /report/*
 !/report/*.pdf
 !/report/*.tex
+!/report/diagrams
