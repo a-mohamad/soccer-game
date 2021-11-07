@@ -22,6 +22,10 @@ Featuring design pattern/principle:
 ## Documentation
 - [Design report](https://github.com/a-mohamad/soccer-game/blob/main/Documentation/report/report.pdf)
 
+### To Generate Javadoc
+```
+./gradlew javadoc
+```
 ## How To Use
 
 ### Controls
