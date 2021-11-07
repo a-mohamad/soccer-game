@@ -108,7 +108,7 @@
 
 \begin{document}
 \title{\textbf{EECS 3311 - Lab 05\\Design Report}}
-\author{Amir Mohamad, Saniz Momin, Akif Prasla, Hasnain Saifee\\\\TA - ta name}
+\author{Amir Mohamad, Saniz Momin, Akif Prasla, Hasnain Saifee\\\\TA - Alireza Naeiji}
 \date{Nov 7, 2021}
 \maketitle
 \tableofcontents
@@ -163,7 +163,12 @@ by giving brief overview of our journey in building this software project.
 
 \section{Front end}
 \subsection{Overview}
-short description overview of front end
+The front end of this project is implemented using the MVC design arcitecture. We have the components
+of our front end separated into the \code{soccergame.view} package and the controllers into the \code{soccergame.controller} package.
+This creates a separation of concerns between the classes which makes the development process easier.
+The main component of the front end is the GamePanel calss. It is where everything is displayed and managed by the controllers
+so the user can interact with the soccer game. The entry point to our program is the MiniSoccerApp class, which initializes
+all the components and sets up the GUI frame with the GameMenuBar and the GamePanel.
 \subsection{Class Diagram}
 \begin{center}
 	\begin{figure}[H]
@@ -177,19 +182,37 @@ short description overview of front end
 
 \section{Classes}
 \subsection{MiniSoccerApp}
-The main runner class which runs the whole project.
+The main runner class which runs the whole project. It is the entry point to the whole project and as such,
+it initializes most of the other classes in preperation to run as expected. This is where the
+GUI is also constructed and displayed from.
 \subsection{GameMenuBar}
-This class represents the top portion of the view which has various controls such as resume, new game, end game, exit,etc
+This class represents the top portion of the view which has various controls such as resume, pause, new game, end game, and quit.
+This makes it easy for the user to control the application. To provide even more options for the user
+each of the menu bar optios have their respective keyboard shortcuts. The menu bar is where the state and flow
+of the game is managed by the user.
 \subsection{GamePanel}
-This class initiates the main view and gives user a visual representation of the game inside the frame. All the visual components
-such as frame, color, etc. are contained in this.
+This class initiates the soccer game and gives user a visual representation of the game inside the GamePanel. All the visual components
+such as soccer ball, game players, soccer gate, etc. are managed and repainted by this class. This
+class also is composed of a SoccerGame class which helps it maintain the state of the game on the GamePanel.
+The repainting tasks of the dynamic elements such as the goalkeeper, the striker and the soccer ball are updated per a
+timer schedule. With these components this class is the main way to setup and repaint our soccergame whenever
+something changes.
 \subsection{GameListener}
-This is a control class which connects the model and view. This controls the user action such as movement and goal scored by connecting
-the other two packages.
+This is a control class which helps to listen for keyboard actions from the user. For this proect, this listener listens
+for the inputs of they keys left arrow, right arrow, up arrow, down arrow, and the space bar. This listener is used
+to update the model in response to the users key presses. To be more specific, the Striker is the part of the
+model this listener updates. So whenever the player position updates after a keypress, the timer task
+in the GamePanel will accordingly repaint the correct positions when it is time to run.
+In this way we can simulate the player moving accross the soccer feild in response to the users input. To
+update the active players this class is composed of a GamePanel with the instance of the soccer game.
+From the GamePanel we can get the instance of the game and get the active player and update their
+position accordingly.
 \subsection{MenuBarListener}
-This is a control class which connects model and view. this class gives the functionality of resume and paused buttons so when
+This is a control class which connects model and view. This class gives the functionality of resume and paused buttons so when
 paused button is pressed the whole game is paused along with the timer and when resume button is pressed game resumes. there is also
-a new Game button which loads and starts the game again.
+a new Game button which loads and starts a new game and also the ability to quit the application. This class
+listens to our GameMenuBar for these options and accordingly updates the model accordingly.
+For example, when a new game is selected, it repaints the GamePanel and model effectively.
 \clearpage
 
 \section{Back end}
@@ -203,8 +226,8 @@ necessary common methods thus reducing code repitition and keeping up the DRY ru
 \subsection{Class Diagram}
 \begin{center}
 	\begin{figure}[H]
-		\hspace{30pt}
-		\includegraphics[scale=.7]{diagrams/class-diagrams/soccer-model/soccer-model-cd.png}
+		\hspace{50pt}
+		\includegraphics[scale=.65]{diagrams/class-diagrams/soccer-model/soccer-model-cd.png}
 		\caption{The class diagram of \code{SOCCERGAME}'s player model (example placeholder image)}
 		\label{fig:backend}
 	\end{figure}
@@ -214,7 +237,7 @@ necessary common methods thus reducing code repitition and keeping up the DRY ru
 \section{Classes}
 \subsection{GamePlayer}
 This is one of the important class required in this software project it is an abstract class
-and contains  essential methods such as moveLeft, moveRight, moveUp,moveDown, shootBall. without the GamePlayer
+and contains  essential methods such as moveLeft, moveRight, moveUp, moveDown, shootBall. without the GamePlayer
 class there is no existence of two players the goalKeeper and striker without which the soccerApp has no meaning.
 \subsection{GoalKeeper}
 This is the class which fulfills the role of goalKeeper. it keeps record of number of saves through
@@ -224,16 +247,27 @@ This is the class which fulfills the role of a striker. the purpose of moving ne
 and scoring goals is what this class does with the help of methods inherited from its parent GamePlayer such as
 movingUP down left right and shooting the ball.
 \subsection{PlayerStatistics}
-This class contains the statistics such as score.
+This class contains the statistics such as score. It helps keep track of a players score using its score feild.
+Thus it has the necessary methods to manipulate the score.
 \subsection{PlayerCollection}
+This class is a custom data structure used to store a list of GamePlayer objects. It has functionalities such as
+sorting a list of players based on score, retreival of players, insertion of one or more players, and
+the abbility to use a custome iterator to iterate the list of players. This class
+uses inner classes Node, and PlayerCollectionIterator to acheive these functionalities.
 \subsection{PlayerCollectionIterator}
-This class works as an iterator class and helps other classes which need to iterate.
+This class is a custom iterator class used to help iterate our list of players in our PlayerCollection datastructure.
+It simply traverses from the head Node of the PlayerCollection and returns the next GamePlayer if
+it exists.
 \subsection{PlayerFactory}
+This class is a factory class that implements the factory design pattern and helps to create players by
+the player name. The only functionality for now is the abbility to create a GoalKeeper and a Striker
+with a predefined color.
 \subsection{SoccerGame}
 This class contains all the important aspects as it has the object notations of the other classes like PlayerCollection and it then
 calls the PlayerFactory class to further initiate the GamePlayer(goalkeeper and striker).
 \subsection{SoccerBall}
-This class represents the ball of the game and deals with the positioning of the ball when in play.
+This class represents the ball of the game and deals with the positioning of the ball when in play. It is a static Singleton
+class to make sure that we only have one instance of the ball at all times.
 
 \clearpage
 
@@ -261,9 +295,17 @@ Therefore if it is GamePlayer goalkeeper =  new GoalKeeper() and if goakKeeper.s
 latest implementation of shootBall() which is implemented in the GoalKeeper class.
 
 \subsection{Design Patterns}
-\textbf{Singleton}: \\
-\textbf{Iterator}: \\
-\textbf{Factory}:
+\textbf{Singleton}: The singleton design pattern is used for the SoccerBall class to maintain one instance of the
+gall throughout a soccer game instance. This assures us that we will always be manipulating one ball
+whenever the game players interact with the SoccerBall class. Along side the GamePlayer classes, the SoccerGame class
+also uses the SoccerBall class to manage some of the game functionalities such as \code{automateGoalKeeper()}. \\ \\
+\textbf{Iterator}: The iterator pattern is used in our PlayerCollection datastructure. More specifically, we use a custom inner class
+iterator called PlayerCollectionIterator which helps iterate over the list of players in our PlayerCollection. Because PlayerCollection
+implements Iterable, we have the ability to use java features such as enhanced for loops. This
+pattern is used wherever theses enhanced for loops are used or where the iterator is explicitly used. \\ \\
+\textbf{Factory}: The factory design pattern is used in the PlayerFactory class. This class
+helps us to create the GoalKeeper and Striker GamePlayer classes via their player name. This factory class
+is used by the SoccerGame class to initialize the goakKeeper and striker into a soccergame.
 \clearpage
 
 \section{Implementation}
@@ -279,15 +321,52 @@ In this project, gradle is used it to manage the look and feel dependencies, cre
 way to run the project. Git was used along with Github so our team could collaborate effectively (this came in handy since we were all in different
 time zones).
 
-\subsection{Collection}
+\subsection{Player Collection}
+The player collection is a custom collection build using an interanal node and iterator class. The PlayerCollection class
+implements iterable so we can iterate over an internal doubly linked list of GamePlayer objects.
+This is where the iterator design pattern is used.
+
+\begin{lstlisting}[frame=single, basicstyle=\small]
+	// custom Node of doubly linked list
+	class Node
+        GamePlayer data;
+        Node next;
+        Node prev;
+
+        Node(GamePlayer data)
+            this.data = data
+\end{lstlisting}
+
 \subsection{Sorting}
+Within the player collectoin we use a simple bubble sorting algorithm to sort the linked list.
+This helps to sort the players by their statistics.
+
+\subsubsection{Pseudocode Code}
+\begin{lstlisting}[frame=single, basicstyle=\small]
+	// bubble sort
+    fun sort() 
+        Node current, index
+        GamePlayer temp
+        if (head != null) 
+            for (current = head; current.next != null; current = current.next) 
+                for (index = current.next; index != null; index = index.next) 
+                    if (current.data.compareTo(index.data) > 0) 
+                        temp = current.data
+                        current.data = index.data
+                        index.data = temp
+\end{lstlisting}
 \subsection{JavaDoc}
-\subsection{JaCoCo}
-
-
+Generating the JavaDoc is easily possible through the \code{gradle javadoc} task. This will generate the
+corresponding \code{index.html} for the projects documentation in the \code{build/docs} directory.
+\subsection{Jacoco}
+We use gradle to manage the Jacoco library dependency. We only test the model class as specified
+in the requirements. The tests covered each case and we managed to get 100\% coverage.
 
 \subsection{Execution}
-disscuss execution process using gradle
+Using github actions, we made sure that our build was dependent on our unit tests. On GitHub we have
+incorporated tags in the README with the build state and the coverage state. As of currently, we have
+100\% coverage with a passing build.
+
 \section{Tools}
 \subsection{Source Code}
 \textbf{IDE}: IntelliJ IDEA 2021.2.1 and Eclipse, to implement Java classes\\
@@ -299,7 +378,6 @@ disscuss execution process using gradle
 \textbf{Unit Testing}: junit-jupiter-engine:5.8.1\\
 \textbf{Coverage}: JaCoCo library, Codcov\\
 \textbf{Github Actions}: used to neatly assert validity of tests before pull requests and pushes to main
-\clearpage
 
 \section{Conclusion}
 This software project helped us to work as a group and also get an insight of how to collaborate while working on the same project.
@@ -320,8 +398,12 @@ concepts taught in the class.
 
 \subsection{Roles}
 \textbf{Setup}: Amir\\
+Setup the project on github to make sure the team could collaborate together.\\ \\
 \textbf{Testing}: Amir, Saniz\\
+Created unit tests within the \code{ModelTest} class. These tests covered all the branch casses and thus
+achieved 100\% coverage while testing the functionality of each components tested.\\ \\
 \textbf{Uml}: Akif, Hasnanin\\
+Created the uml.\\ \\
 \textbf{Report}: Saniz, Akif, Hasnain\\
-
+Created the report.
 \end{document}
