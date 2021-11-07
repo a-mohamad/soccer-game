@@ -7,7 +7,7 @@ public class PlayerStatistics {
     /**
      * An abstract score of a {@code GamePlayer}
      */
-    Integer score = 0;
+    private Integer score = 0;
 
     /**
      * Get the statistics attribute of this {@code PlayerStatistics} object.
