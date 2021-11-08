@@ -40,10 +40,10 @@ Use the <kbd>Space</kbd> to shoot bar with the `Stiker`.
 - <kbd>R</kbd> to resume the game
 
 ## How To Run
-https://user-images.githubusercontent.com/75959959/140392172-e9c6f2fe-7990-443f-aa9d-551b84c3afb0.mp4
+https://user-images.githubusercontent.com/60088310/140667526-dfb9107d-2de8-4cd7-9190-e2fc853a5241.mp4
+
 
 or 
-
 
 
 ```
